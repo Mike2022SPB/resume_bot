@@ -1,5 +1,8 @@
-class GraphqlController < Api::BaseController
-  before_action :authenticate_with_service_key
+class GraphqlController < ApplicationController
+  # If accessing from outside this domain, nullify the session
+  # This allows for outside API access while preventing CSRF attacks,
+  # but you'll have to authenticate your user separately
+  # protect_from_forgery with: :null_session
 
   def execute
     variables = prepare_variables(params[:variables])
@@ -7,18 +10,13 @@ class GraphqlController < Api::BaseController
     operation_name = params[:operationName]
     context = {
       # Query context goes here, for example:
-      current_user: current_user,
+      # current_user: current_user,
     }
-    result = BaseSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
+    result = HasuraRailsStarterSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
-  rescue AuthorizationError => e
-    handle_authorization_error(e)
   rescue StandardError => e
-    if Rails.env.development?
-      handle_error_in_development(e)
-    else
-      handle_error(e)
-    end
+    raise e unless Rails.env.development?
+    handle_error_in_development(e)
   end
 
   private
@@ -48,13 +46,5 @@ class GraphqlController < Api::BaseController
     logger.error e.backtrace.join("\n")
 
     render json: { errors: [{ message: e.message, backtrace: e.backtrace }], data: {} }, status: 500
-  end
-
-  def handle_authorization_error(e)
-    render json: { errors: [{ message: e.message, extensions: { path: '$', code: 'authorization-error' } }], data: {} }, status: 403
-  end
-
-  def handle_error(e)
-    render json: { errors: [{ message: e.message, extensions: { path: '$', code: 'unexpected-error' } }], data: {} }, status: 500
   end
 end
