@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_16_122830) do
+ActiveRecord::Schema.define(version: 2023_04_15_124009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -121,6 +121,16 @@ ActiveRecord::Schema.define(version: 2021_10_16_122830) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_oauth_identities_on_user_id"
+  end
+
+  create_table "telegram_profiles", force: :cascade do |t|
+    t.string "name"
+    t.string "lastname"
+    t.string "username"
+    t.bigint "telegram_id"
+    t.string "step"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|
