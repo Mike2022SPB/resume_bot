@@ -1,6 +1,7 @@
 require File.expand_path('config/environment', __dir__)
 
 require "telegram/bot"
+require_relative "lib/modules/constant_module.rb"
 
 token = ENV.fetch('TOKEN')
 
@@ -17,21 +18,17 @@ Telegram::Bot::Client.run(token) do |bot|
     end
 
     case user.step
-    when "first"
-      variable = message.text.to_i + 10
-        bot.api.send_message(chat_id: message.chat.id, 
-          text: "#{variable}")
-      user.update(step: "second")
-    when "second"
+    when "menu"
     end
 
     case message
     when Telegram::Bot::Types::Message
       case message.text
       when "/start"
-        user.update(step: "first")
-        bot.api.send_message(chat_id: message.chat.id, 
-          text: "Input your number")
+        user.update(step: "menu")
+        bot.api.send_message(chat_id: message.chat.id,
+              text: "Please, choose the option",
+              reply_markup: ConstantModule::COMMON_MARKUP)
       end
       p "text: #{message.text}"
     else
