@@ -27,10 +27,17 @@ Telegram::Bot::Client.run(token) do |bot|
       when "/start"
         user.update(step: "menu")
         bot.api.send_message(chat_id: message.chat.id,
+              text: "Hello, #{message.from.first_name}! Please, choose the option below:",
+              reply_markup: ConstantModule::COMMON_MARKUP)
+      else
+        user.update(step: "menu")
+        bot.api.send_message(chat_id: message.chat.id,
               text: "Please, choose the option",
               reply_markup: ConstantModule::COMMON_MARKUP)
       end
       p "text: #{message.text}"
+    when Telegram::Bot::Types::CallbackQuery
+      CallbackHandler.define_step(message, bot, user)
     else
       bot.logger.info("Not sure what to do with this type of message")
     end
