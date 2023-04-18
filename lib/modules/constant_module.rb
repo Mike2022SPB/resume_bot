@@ -13,12 +13,10 @@ module ConstantModule
 
   COMMON_MARKUP = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: COMMON_INLINE_KEYBOARD)
 
-  SUMMARY = "Hello! My name is Mike. I am experienced Ruby on Rails developer with 2 years" + 
-  " of experience designing and implementing web applications. \n" + 
-  "Proficient in back-end development using Rails" + 
-  " framework. Skilled in working with Ruby and integrating with various APIs. \n" + 
-  "I have strong knowledge of database design and management, and experience with testing" + 
-  " frameworks such as RSpec. \nDedicated team player with a passion for delivering high-quality work and achieving project goals. \n" +
-  "Modern technologies help people to adapt in a rapidly changing world." +
-  " Business and its tasks allow people to open up great opportunities and prospects, which is why I want to help society by helping business."
+  WORK_EXPERIENCE_INLINE_KEYBOARD = [
+    Telegram::Bot::Types::InlineKeyboardButton.new(text: "Independent developers team (March 2021 - October 2022)", callback_data: "IDT"),
+    Telegram::Bot::Types::InlineKeyboardButton.new(text: "AP Companies Global Solutions (October 2022 - until now)", callback_data: "APCGS")
+  ]
+
+  WORK_EXPERIENCE_MARKUP = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: WORK_EXPERIENCE_INLINE_KEYBOARD)
 end

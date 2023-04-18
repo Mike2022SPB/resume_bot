@@ -4,8 +4,17 @@ class CallbackHandler
     case message.data
     when "summary"
       bot.api.send_message(chat_id: message.from.id,
-        text: ConstantModule::SUMMARY)
+        text: Paragraph.find_by(title: "Summary").description)
     when "experience"
+      bot.api.send_message(chat_id: message.from.id,
+        text: "Employment history 💻",
+        reply_markup: ConstantModule::WORK_EXPERIENCE_MARKUP)
+    when "IDT"
+      bot.api.send_message(chat_id: message.from.id,
+        text: Paragraph.find_by(title: "IDT").description)
+    when "APCGS"
+      bot.api.send_message(chat_id: message.from.id,
+        text: Paragraph.find_by(title: "APCGS").description)
     when "hard"
     when "soft"
     when "pdf"
