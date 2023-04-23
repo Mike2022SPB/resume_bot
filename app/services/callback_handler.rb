@@ -23,6 +23,9 @@ class CallbackHandler
       bot.api.send_message(chat_id: message.from.id,
         text: Paragraph.find_by(title: "Contacts").description)
     when "message"
+      user.update(step: "message")
+      bot.api.send_message(chat_id: message.from.id,
+        text: "Enter the text below and it will be sent to my chat.")
     when "about"
     else
     end

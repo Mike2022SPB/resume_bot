@@ -74,7 +74,8 @@ end
 
 if Paragraph.find_by(title: "Contacts").nil?
   Paragraph.create(title: "Contacts",
-    description: "Location: I'm digital nomad, but currently live in Georgia, Batumi. \n \n" + 
+    description: "Contacts \n \n" + 
+      "Location: I'm digital nomad, but currently live in Georgia, Batumi. \n \n" + 
       "E-mail: mike.godunoff2020@gmail.com \n \n" +
       "Telegram: https://t.me/mike_godunoff \n \n" + 
       "Github: https://github.com/Mike2022SPB; \n \n" +

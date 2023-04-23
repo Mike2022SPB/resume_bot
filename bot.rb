@@ -18,11 +18,14 @@ Telegram::Bot::Client.run(token) do |bot|
     end
 
     case user.step
-    when "menu"
+    when "message"
+      bot.api.send_message(chat_id: ENV.fetch('TELEGRAM_ID'),
+        text: "@#{message.from.username}: #{message.text}")
     end
 
     case message
     when Telegram::Bot::Types::Message
+      TelegramMessage.create!(telegram_profile_id: user.id, message: message.text)
       case message.text
       when "/start"
         user.update(step: "menu")
