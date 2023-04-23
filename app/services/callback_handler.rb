@@ -7,7 +7,7 @@ class CallbackHandler
         text: Paragraph.find_by(title: "Summary").description)
     when "experience"
       bot.api.send_message(chat_id: message.from.id,
-        text: "Employment history 💻",
+        text: "Employment history and skills 💻",
         reply_markup: ConstantModule::WORK_EXPERIENCE_MARKUP)
     when "IDT"
       bot.api.send_message(chat_id: message.from.id,
@@ -15,10 +15,13 @@ class CallbackHandler
     when "APCGS"
       bot.api.send_message(chat_id: message.from.id,
         text: Paragraph.find_by(title: "APCGS").description)
-    when "hard"
-    when "soft"
+    when "Feniks"
+      bot.api.send_message(chat_id: message.from.id,
+        text: Paragraph.find_by(title: "Feniks consulting").description)
     when "pdf"
     when "contacts"
+      bot.api.send_message(chat_id: message.from.id,
+        text: Paragraph.find_by(title: "Contacts").description)
     when "message"
     when "about"
     else

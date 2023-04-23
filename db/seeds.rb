@@ -52,6 +52,32 @@ if Paragraph.find_by(title: "APCGS").nil?
       "4. Creating and working with hasura actions and event triggers; \n \n" +
       "5. Using the KISS programming principle and Model-View-Presenter (MVP) design pattern; \n \n" +
       "6. Using kubesphere and gitlab for version control and application deployment; \n \n" +
-      "7. Working with sidekiq workers, a non-relational Redis database.")
+      "7. Working with sidekiq workers, and non-relational Redis database.")
   puts "=====APCGS was created====="
+end
+
+if Paragraph.find_by(title: "Feniks consulting").nil?
+  Paragraph.create(title: "Feniks consulting",
+    description: "I worked in law. I started as a paralegal and ended up as the head of a legal branch." + 
+      "By the end of my career, I was looking for ways to program legal processes and was decomposing tasks" + 
+      "for financial analysis of companies to increase profits.\n \n" +
+      "Relevant to RoR developer analytical and soft skills:\n \n" + 
+      "1. Financial analysis of the company, profits, losses and solvency; \n \n" +
+      "2. Financial analysis of real estate, securities and accounts receivable; \n \n" +
+      "3. Negotiating and resolving disagreements during the litigation and teamwork; \n \n" +
+      "4. Decomposition of complex tasks and distribution of roles among team members; \n \n" +
+      "5. Analysis of contracts, agreements, court decisions, formulation of conclusions and generalization of judicial practice; \n \n" +
+      "6. Setting tasks for the development department to automate the team's work processes; \n \n" +
+      "7. Participation in auctions for the sale of bankrupt property, analysis of bidders.")
+  puts "=====Feniks consulting was created====="
+end
+
+if Paragraph.find_by(title: "Contacts").nil?
+  Paragraph.create(title: "Contacts",
+    description: "Location: I'm digital nomad, but currently live in Georgia, Batumi. \n \n" + 
+      "E-mail: mike.godunoff2020@gmail.com \n \n" +
+      "Telegram: https://t.me/mike_godunoff \n \n" + 
+      "Github: https://github.com/Mike2022SPB; \n \n" +
+      "Linkedin: https://www.linkedin.com/in/mike-godunoff/")
+  puts "=====Contacts were created====="
 end
