@@ -23,7 +23,7 @@ if Paragraph.find_by(title: "Summary").nil?
   "Modern technologies help people to adapt in a rapidly changing world." +
   " Business and its tasks allow people to open up great opportunities and prospects, which is why I want to help society by helping business.")
   
-  puts "=====Summary was created====="
+  puts "=====Summary have been created====="
 end
 
 if Paragraph.find_by(title: "IDT").nil?
@@ -39,7 +39,7 @@ if Paragraph.find_by(title: "IDT").nil?
       "6. Creating and modifying helpers, partials and flash; \n \n" +
       "7. Creating custom cascading style sheets(CSS) and JavaScript for basic front-end; \n \n" +
       "8. Test-driven development(TDD).")
-  puts "=====IDT was created====="
+  puts "=====IDT have been created====="
 end
 
 if Paragraph.find_by(title: "APCGS").nil?
@@ -53,7 +53,7 @@ if Paragraph.find_by(title: "APCGS").nil?
       "5. Using the KISS programming principle and Model-View-Presenter (MVP) design pattern; \n \n" +
       "6. Using kubesphere and gitlab for version control and application deployment; \n \n" +
       "7. Working with sidekiq workers, and non-relational Redis database.")
-  puts "=====APCGS was created====="
+  puts "=====APCGS have been created====="
 end
 
 if Paragraph.find_by(title: "Feniks consulting").nil?
@@ -69,7 +69,7 @@ if Paragraph.find_by(title: "Feniks consulting").nil?
       "5. Analysis of contracts, agreements, court decisions, formulation of conclusions and generalization of judicial practice; \n \n" +
       "6. Setting tasks for the development department to automate the team's work processes; \n \n" +
       "7. Participation in auctions for the sale of bankrupt property, analysis of bidders.")
-  puts "=====Feniks consulting was created====="
+  puts "=====Feniks have been created====="
 end
 
 if Paragraph.find_by(title: "Contacts").nil?
@@ -80,5 +80,54 @@ if Paragraph.find_by(title: "Contacts").nil?
       "Telegram: https://t.me/mike_godunoff \n \n" + 
       "Github: https://github.com/Mike2022SPB; \n \n" +
       "Linkedin: https://www.linkedin.com/in/mike-godunoff/")
-  puts "=====Contacts were created====="
+  puts "=====Contacts have been created====="
+end
+
+if Paragraph.find_by(title: "Goodpro").nil?
+  Paragraph.create(title: "Goodpro",
+    description: "✓Completed Ruby on Rails training course. (February 2022 - September 2022) \n \n" + 
+      "->Object-oriented programming \n \n" + 
+      "->Building of command-line applications \n \n" +
+      "->Creating apps and working with Rails \n \n" + 
+      "->Testing Rails Applications")
+  puts "=====Goodpro have been created====="
+end
+
+if Paragraph.find_by(title: "TOLES").nil?
+  Paragraph.create(title: "TOLES",
+    description: "✓Completed the TOLES(test of legal english skills) (February 2021 - November 2021) \n \n" + 
+      "->Plain English \n \n" + 
+      "->Techical English \n \n" +
+      "->Legal English \n \n" + 
+      "->International contracts and Banking\n \n" +
+      "->Common law system")
+  puts "=====TOLES have been created====="
+end
+
+if Paragraph.find_by(title: "Economical").nil?
+  Paragraph.create(title: "Economical",
+    description: "✓Completed economical and accounting courses (January 2018 - July 2018) \n \n" + 
+      "->The economy of the enterprise \n \n" + 
+      "->Accounting software")
+  puts "=====Economical have been created====="
+end
+
+if Paragraph.find_by(title: "SLI").nil?
+  Paragraph.create(title: "SLI",
+    description: "✓Siberian Law Institute(Bachelor of law) (August 2014 - July 2018) \n \n" + 
+      "->Court appearance \n \n" + 
+      "->Conflictology \n \n" + 
+      "->Information Security \n \n" + 
+      "->English")
+  puts "=====SLI have been created====="
+end
+
+if Paragraph.find_by(title: "Webdesign").nil?
+  Paragraph.create(title: "Webdesign",
+    description: "Completed the course of web-design (February 2010 - November 2012) \n \n" + 
+      "->HTML \n \n" + 
+      "->CSS \n \n" + 
+      "->Javascript \n \n" + 
+      "->PHP")
+  puts "=====Webdesign have been created====="
 end
