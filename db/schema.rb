@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_04_23_130825) do
+ActiveRecord::Schema.define(version: 2023_04_24_184702) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -130,6 +130,14 @@ ActiveRecord::Schema.define(version: 2023_04_23_130825) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "stocks", force: :cascade do |t|
+    t.string "title"
+    t.string "ticker"
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "telegram_messages", force: :cascade do |t|
     t.bigint "telegram_profile_id"
     t.text "message"
@@ -146,6 +154,17 @@ ActiveRecord::Schema.define(version: 2023_04_23_130825) do
     t.string "step"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "trading_days", force: :cascade do |t|
+    t.date "date"
+    t.decimal "open", precision: 10, scale: 2
+    t.decimal "close", precision: 10, scale: 2
+    t.decimal "adj_close", precision: 10, scale: 2
+    t.bigint "stock_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["stock_id"], name: "index_trading_days_on_stock_id"
   end
 
   create_table "users", force: :cascade do |t|

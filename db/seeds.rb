@@ -1,10 +1,6 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+require 'uri'
+require 'net/http'
+require 'json'
 
 AdminUser.create_with(
   name: ENV["ADMIN_NAME"] || Rails.application.credentials.admin[:name],
@@ -130,4 +126,262 @@ if Paragraph.find_by(title: "Webdesign").nil?
       "->Javascript \n \n" + 
       "->PHP")
   puts "=====Webdesign have been created====="
+end
+
+if Paragraph.find_by(title: "About").nil?
+  Paragraph.create(title: "About",
+    description: "Telegram bot is open to GraphQL queries used by Hasura, he also performs api" +
+      " requests himself and updates the existing database depending on the responses." +
+      " The bot also has a number of applications and games written in Ruby.")
+  puts "=====About have been created====="
+end
+
+if TradingDay.first.nil?
+  url = URI("https://yh-finance-complete.p.rapidapi.com/yhfhistorical?ticker=AAPL&sdate=2013-01-01&edate=2023-01-01")
+
+  http = Net::HTTP.new(url.host, url.port)
+  http.use_ssl = true
+
+  request = Net::HTTP::Get.new(url)
+  request["content-type"] = 'application/octet-stream'
+  request["X-RapidAPI-Key"] = 'f1f6ccfda8msh10fb2a9ed01cd0dp13b608jsnfc3a4c06647f'
+  request["X-RapidAPI-Host"] = 'yh-finance-complete.p.rapidapi.com'
+
+  response = http.request(request)
+
+  aapl = JSON.parse(response.read_body)
+
+  count = -1
+
+  days_of_year = [0]
+
+  80.times do
+    count += 30
+    days_of_year << count
+  end
+
+  array_of_necessary_data = []
+
+  days_of_year.each do |day|
+    array_of_necessary_data << aapl[day]
+  end
+
+  if Stock.find_by(title: "Apple").nil?
+    apple = Stock.create!(
+      title: "Apple",
+      ticker: "AAPL", 
+      description: "AAApleee")
+  else
+    apple = Stock.find_by(title: "Apple")
+  end
+
+  array_of_necessary_data.each do |trading_day|
+    TradingDay.create!(
+      date: trading_day["date"],
+      open: trading_day["open"],
+      close: trading_day["close"],
+      adj_close: trading_day["adjClose"],
+      stock_id: apple.id)
+  end
+  puts "=====AAPL have been created====="
+end
+
+if Stock.find_by(title: "Lockheed Martin").nil?
+  url = URI("https://yh-finance-complete.p.rapidapi.com/yhfhistorical?ticker=LMT&sdate=2013-01-01&edate=2023-01-01")
+
+  http = Net::HTTP.new(url.host, url.port)
+  http.use_ssl = true
+
+  request = Net::HTTP::Get.new(url)
+  request["content-type"] = 'application/octet-stream'
+  request["X-RapidAPI-Key"] = 'f1f6ccfda8msh10fb2a9ed01cd0dp13b608jsnfc3a4c06647f'
+  request["X-RapidAPI-Host"] = 'yh-finance-complete.p.rapidapi.com'
+
+  response = http.request(request)
+
+  lmt = JSON.parse(response.read_body)
+
+  count = -1
+
+  days_of_year = [0]
+
+  80.times do
+    count += 30
+    days_of_year << count
+  end
+
+  array_of_necessary_data = []
+
+  days_of_year.each do |day|
+    array_of_necessary_data << lmt[day]
+  end
+
+  if Stock.find_by(title: "Lockheed Martin").nil?
+    lockheed_martin = Stock.create!(
+      title: "Lockheed Martin",
+      ticker: "LMT", 
+      description: "Lockheed Martin")
+  else
+    lockheed_martin = Stock.find_by(title: "Lockheed Martin")
+  end
+
+  array_of_necessary_data.each do |trading_day|
+    TradingDay.create!(
+      date: trading_day["date"],
+      open: trading_day["open"],
+      close: trading_day["close"],
+      adj_close: trading_day["adjClose"],
+      stock_id: lockheed_martin.id)
+  end
+  puts "=====LMT have been created====="
+end
+
+if Stock.find_by(title: "Microsoft").nil?
+  url = URI("https://yh-finance-complete.p.rapidapi.com/yhfhistorical?ticker=MSFT&sdate=2013-01-01&edate=2023-01-01")
+
+  http = Net::HTTP.new(url.host, url.port)
+  http.use_ssl = true
+
+  request = Net::HTTP::Get.new(url)
+  request["content-type"] = 'application/octet-stream'
+  request["X-RapidAPI-Key"] = 'f1f6ccfda8msh10fb2a9ed01cd0dp13b608jsnfc3a4c06647f'
+  request["X-RapidAPI-Host"] = 'yh-finance-complete.p.rapidapi.com'
+
+  response = http.request(request)
+
+  msft = JSON.parse(response.read_body)
+
+  count = -1
+
+  days_of_year = [0]
+
+  80.times do
+    count += 30
+    days_of_year << count
+  end
+
+  array_of_necessary_data = []
+
+  days_of_year.each do |day|
+    array_of_necessary_data << msft[day]
+  end
+
+  if Stock.find_by(title: "Microsoft").nil?
+    microsoft = Stock.create!(
+      title: "Microsoft",
+      ticker: "MSFT", 
+      description: "Microsoft")
+  else
+    microsoft = Stock.find_by(title: "Microsoft")
+  end
+
+  array_of_necessary_data.each do |trading_day|
+    TradingDay.create!(
+      date: trading_day["date"],
+      open: trading_day["open"],
+      close: trading_day["close"],
+      adj_close: trading_day["adjClose"],
+      stock_id: microsoft.id)
+  end
+  puts "=====MSFT have been created====="
+end
+
+if Stock.find_by(title: "McDonald’s").nil?
+  url = URI("https://yh-finance-complete.p.rapidapi.com/yhfhistorical?ticker=MCD&sdate=2013-01-01&edate=2023-01-01")
+
+  http = Net::HTTP.new(url.host, url.port)
+  http.use_ssl = true
+
+  request = Net::HTTP::Get.new(url)
+  request["content-type"] = 'application/octet-stream'
+  request["X-RapidAPI-Key"] = 'f1f6ccfda8msh10fb2a9ed01cd0dp13b608jsnfc3a4c06647f'
+  request["X-RapidAPI-Host"] = 'yh-finance-complete.p.rapidapi.com'
+
+  response = http.request(request)
+
+  mcd = JSON.parse(response.read_body)
+
+  count = -1
+
+  days_of_year = [0]
+
+  80.times do
+    count += 30
+    days_of_year << count
+  end
+
+  array_of_necessary_data = []
+
+  days_of_year.each do |day|
+    array_of_necessary_data << mcd[day]
+  end
+
+  if Stock.find_by(title: "McDonald’s").nil?
+    microsoft = Stock.create!(
+      title: "McDonald’s",
+      ticker: "MCD", 
+      description: "McDonald’s")
+  else
+    microsoft = Stock.find_by(title: "McDonald’s")
+  end
+
+  array_of_necessary_data.each do |trading_day|
+    TradingDay.create!(
+      date: trading_day["date"],
+      open: trading_day["open"],
+      close: trading_day["close"],
+      adj_close: trading_day["adjClose"],
+      stock_id: microsoft.id)
+  end
+  puts "=====MCD have been created====="
+end
+
+if Stock.find_by(title: "Bank of America Corp").nil?
+  url = URI("https://yh-finance-complete.p.rapidapi.com/yhfhistorical?ticker=BAC&sdate=2013-01-01&edate=2023-01-01")
+
+  http = Net::HTTP.new(url.host, url.port)
+  http.use_ssl = true
+
+  request = Net::HTTP::Get.new(url)
+  request["content-type"] = 'application/octet-stream'
+  request["X-RapidAPI-Key"] = 'f1f6ccfda8msh10fb2a9ed01cd0dp13b608jsnfc3a4c06647f'
+  request["X-RapidAPI-Host"] = 'yh-finance-complete.p.rapidapi.com'
+
+  response = http.request(request)
+
+  bac = JSON.parse(response.read_body)
+
+  count = -1
+
+  days_of_year = [0]
+
+  80.times do
+    count += 30
+    days_of_year << count
+  end
+
+  array_of_necessary_data = []
+
+  days_of_year.each do |day|
+    array_of_necessary_data << bac[day]
+  end
+
+  if Stock.find_by(title: "Bank of America Corp").nil?
+    microsoft = Stock.create!(
+      title: "Bank of America Corp",
+      ticker: "BAC", 
+      description: "Bank of America Corp")
+  else
+    microsoft = Stock.find_by(title: "Bank of America Corp")
+  end
+
+  array_of_necessary_data.each do |trading_day|
+    TradingDay.create!(
+      date: trading_day["date"],
+      open: trading_day["open"],
+      close: trading_day["close"],
+      adj_close: trading_day["adjClose"],
+      stock_id: microsoft.id)
+  end
+  puts "=====BAC have been created====="
 end

@@ -48,6 +48,8 @@ class CallbackHandler
       bot.api.send_message(chat_id: message.from.id,
         text: "https://mike2022spb.github.io/curriculum_vitae/files/carriculum_vitae.pdf")
     when "about"
+      bot.api.send_message(chat_id: message.from.id,
+        text: Paragraph.find_by(title: "About").description)
     else
     end
     TelegramMessage.create!(telegram_profile_id: user.id, message: message.data)
