@@ -29,4 +29,18 @@ module ConstantModule
   ]
 
   EDUCATION_MARKUP = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: EDUCATION_INLINE_KEYBOARD)
+
+  GAME_INLINE_KEYBOARD = [
+    Telegram::Bot::Types::InlineKeyboardButton.new(text: "Investment game", callback_data: "Investment game")
+  ]
+
+  GAME_MARKUP = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: GAME_INLINE_KEYBOARD)
+
+  NEXT_DAY_INLINE_KEYBOARD = [
+    Telegram::Bot::Types::InlineKeyboardButton.new(text: "Next", callback_data: "Next"),
+    Telegram::Bot::Types::InlineKeyboardButton.new(text: "Buy", callback_data: "Buy"),
+    Telegram::Bot::Types::InlineKeyboardButton.new(text: "Sell", callback_data: "Sell")
+  ]
+
+  NEXT_DAY_MARKUP = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: NEXT_DAY_INLINE_KEYBOARD)
 end

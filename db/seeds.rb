@@ -136,7 +136,16 @@ if Paragraph.find_by(title: "About").nil?
   puts "=====About have been created====="
 end
 
-if TradingDay.first.nil?
+if Paragraph.find_by(title: "About investment game").nil?
+  Paragraph.create(title: "About investment game",
+    description: "The game allows you to create capital by buying and selling shares." + 
+    "The historical value of the shares was created by making an API request to the YH Finance Complete server." + 
+    "The stock trading period is from 2013 to 2022. You only have $1000, try to create a capital of $10000000.")
+  
+  puts "=====About investment game have been created====="
+end
+
+if Stock.find_by(title: "apple_stock").nil?
   url = URI("https://yh-finance-complete.p.rapidapi.com/yhfhistorical?ticker=AAPL&sdate=2013-01-01&edate=2023-01-01")
 
   http = Net::HTTP.new(url.host, url.port)
@@ -166,27 +175,31 @@ if TradingDay.first.nil?
     array_of_necessary_data << aapl[day]
   end
 
-  if Stock.find_by(title: "Apple").nil?
+  if Stock.find_by(title: "apple_stock").nil?
     apple = Stock.create!(
-      title: "Apple",
+      title: "apple_stock",
       ticker: "AAPL", 
       description: "AAApleee")
   else
-    apple = Stock.find_by(title: "Apple")
+    apple = Stock.find_by(title: "apple_stock")
   end
 
-  array_of_necessary_data.each do |trading_day|
-    TradingDay.create!(
-      date: trading_day["date"],
-      open: trading_day["open"],
-      close: trading_day["close"],
-      adj_close: trading_day["adjClose"],
-      stock_id: apple.id)
+  if apple.trading_days.empty?
+    array_of_necessary_data.each do |trading_day|
+      TradingDay.create!(
+        date: trading_day["date"],
+        open: trading_day["open"],
+        close: trading_day["close"],
+        adj_close: trading_day["adjClose"],
+        stock_id: apple.id)
+    end
+  else
   end
+  
   puts "=====AAPL have been created====="
 end
 
-if Stock.find_by(title: "Lockheed Martin").nil?
+if Stock.find_by(title: "lockheed_stock").nil?
   url = URI("https://yh-finance-complete.p.rapidapi.com/yhfhistorical?ticker=LMT&sdate=2013-01-01&edate=2023-01-01")
 
   http = Net::HTTP.new(url.host, url.port)
@@ -216,27 +229,31 @@ if Stock.find_by(title: "Lockheed Martin").nil?
     array_of_necessary_data << lmt[day]
   end
 
-  if Stock.find_by(title: "Lockheed Martin").nil?
+  if Stock.find_by(title: "lockheed_stock").nil?
     lockheed_martin = Stock.create!(
-      title: "Lockheed Martin",
+      title: "lockheed_stock",
       ticker: "LMT", 
       description: "Lockheed Martin")
   else
-    lockheed_martin = Stock.find_by(title: "Lockheed Martin")
+    lockheed_martin = Stock.find_by(title: "lockheed_stock")
   end
 
-  array_of_necessary_data.each do |trading_day|
-    TradingDay.create!(
-      date: trading_day["date"],
-      open: trading_day["open"],
-      close: trading_day["close"],
-      adj_close: trading_day["adjClose"],
-      stock_id: lockheed_martin.id)
+  if lockheed_martin.trading_days.empty?
+    array_of_necessary_data.each do |trading_day|
+      TradingDay.create!(
+        date: trading_day["date"],
+        open: trading_day["open"],
+        close: trading_day["close"],
+        adj_close: trading_day["adjClose"],
+        stock_id: lockheed_martin.id)
+    end
+  else
   end
+
   puts "=====LMT have been created====="
 end
 
-if Stock.find_by(title: "Microsoft").nil?
+if Stock.find_by(title: "microsoft_stock").nil?
   url = URI("https://yh-finance-complete.p.rapidapi.com/yhfhistorical?ticker=MSFT&sdate=2013-01-01&edate=2023-01-01")
 
   http = Net::HTTP.new(url.host, url.port)
@@ -266,27 +283,33 @@ if Stock.find_by(title: "Microsoft").nil?
     array_of_necessary_data << msft[day]
   end
 
-  if Stock.find_by(title: "Microsoft").nil?
+  if Stock.find_by(title: "microsoft_stock").nil?
     microsoft = Stock.create!(
-      title: "Microsoft",
+      title: "microsoft_stock",
       ticker: "MSFT", 
       description: "Microsoft")
   else
-    microsoft = Stock.find_by(title: "Microsoft")
+    microsoft = Stock.find_by(title: "microsoft_stock")
   end
 
-  array_of_necessary_data.each do |trading_day|
-    TradingDay.create!(
-      date: trading_day["date"],
-      open: trading_day["open"],
-      close: trading_day["close"],
-      adj_close: trading_day["adjClose"],
-      stock_id: microsoft.id)
+  if microsoft.trading_days.empty?
+    array_of_necessary_data.each do |trading_day|
+      TradingDay.create!(
+        date: trading_day["date"],
+        open: trading_day["open"],
+        close: trading_day["close"],
+        adj_close: trading_day["adjClose"],
+        stock_id: microsoft.id)
+    end
+  else
   end
+
   puts "=====MSFT have been created====="
 end
 
-if Stock.find_by(title: "McDonald’s").nil?
+sleep 60
+
+if Stock.find_by(title: "mcdonald’s_stock").nil?
   url = URI("https://yh-finance-complete.p.rapidapi.com/yhfhistorical?ticker=MCD&sdate=2013-01-01&edate=2023-01-01")
 
   http = Net::HTTP.new(url.host, url.port)
@@ -299,7 +322,7 @@ if Stock.find_by(title: "McDonald’s").nil?
 
   response = http.request(request)
 
-  mcd = JSON.parse(response.read_body)
+  p mcd = JSON.parse(response.read_body)
 
   count = -1
 
@@ -316,27 +339,33 @@ if Stock.find_by(title: "McDonald’s").nil?
     array_of_necessary_data << mcd[day]
   end
 
-  if Stock.find_by(title: "McDonald’s").nil?
-    microsoft = Stock.create!(
-      title: "McDonald’s",
+  p array_of_necessary_data
+
+  if Stock.find_by(title: "mcdonald’s_stock").nil?
+    mcdonalds = Stock.create!(
+      title: "mcdonald’s_stock",
       ticker: "MCD", 
       description: "McDonald’s")
   else
-    microsoft = Stock.find_by(title: "McDonald’s")
+    mcdonalds = Stock.find_by(title: "mcdonald’s_stock")
   end
 
-  array_of_necessary_data.each do |trading_day|
-    TradingDay.create!(
-      date: trading_day["date"],
-      open: trading_day["open"],
-      close: trading_day["close"],
-      adj_close: trading_day["adjClose"],
-      stock_id: microsoft.id)
+  if mcdonalds.trading_days.empty?
+    array_of_necessary_data.each do |trading_day|
+      TradingDay.create!(
+        date: trading_day["date"],
+        open: trading_day["open"],
+        close: trading_day["close"],
+        adj_close: trading_day["adjClose"],
+        stock_id: mcdonalds.id)
+    end
+  else
   end
+
   puts "=====MCD have been created====="
 end
 
-if Stock.find_by(title: "Bank of America Corp").nil?
+if Stock.find_by(title: "BAC_stock").nil?
   url = URI("https://yh-finance-complete.p.rapidapi.com/yhfhistorical?ticker=BAC&sdate=2013-01-01&edate=2023-01-01")
 
   http = Net::HTTP.new(url.host, url.port)
@@ -366,22 +395,26 @@ if Stock.find_by(title: "Bank of America Corp").nil?
     array_of_necessary_data << bac[day]
   end
 
-  if Stock.find_by(title: "Bank of America Corp").nil?
-    microsoft = Stock.create!(
-      title: "Bank of America Corp",
+  if Stock.find_by(title: "BAC_stock").nil?
+    bank_of_america = Stock.create!(
+      title: "BAC_stock",
       ticker: "BAC", 
       description: "Bank of America Corp")
   else
-    microsoft = Stock.find_by(title: "Bank of America Corp")
+    bank_of_america = Stock.find_by(title: "BAC_stock")
   end
 
-  array_of_necessary_data.each do |trading_day|
-    TradingDay.create!(
-      date: trading_day["date"],
-      open: trading_day["open"],
-      close: trading_day["close"],
-      adj_close: trading_day["adjClose"],
-      stock_id: microsoft.id)
+  if bank_of_america.trading_days.empty?
+    array_of_necessary_data.each do |trading_day|
+      TradingDay.create!(
+        date: trading_day["date"],
+        open: trading_day["open"],
+        close: trading_day["close"],
+        adj_close: trading_day["adjClose"],
+        stock_id: bank_of_america.id)
+    end
+  else
   end
+
   puts "=====BAC have been created====="
 end
