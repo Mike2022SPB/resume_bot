@@ -179,7 +179,7 @@ if Stock.find_by(title: "apple_stock").nil?
     apple = Stock.create!(
       title: "apple_stock",
       ticker: "AAPL", 
-      description: "AAApleee")
+      description: "Apple")
   else
     apple = Stock.find_by(title: "apple_stock")
   end

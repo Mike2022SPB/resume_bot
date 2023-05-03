@@ -65,40 +65,51 @@ class CallbackHandler
       bot.api.send_message(chat_id: message.from.id,
         text: Paragraph.find_by(title: "About investment game").description,
         reply_markup: stock_markups)
-    else
-    end
-
-    if stocks_titles.include?(message.data)
-      p capital = 1000.to_d
-      p stock = Stock.find_by(title: message.data)
-      first_trading_day = stock.trading_days.sort_by(&:date).first
-      first_trading_day_price = first_trading_day.adj_close.to_f
-      first_trading_day_date = first_trading_day.date
-      game = Game.create!(capital: capital, 
-        date: first_trading_day_date, 
-        step: 0,
-        telegram_profile_id: user.id,
-        ticker: [] << stock.ticker)
-      bot.api.send_message(chat_id: message.from.id,
-        text: first_trading_day_price,
-        reply_markup: ConstantModule::NEXT_DAY_MARKUP)
-    else
-    end
-
-    if operations.include?(message.data)
+    when "Next"
       game = user.games.last
       game.update!(step: game.step += 1)
       stock = Stock.find_by(ticker: game.ticker[0])
       begin
         price = stock.trading_days.sort_by(&:date)[game.step].adj_close.to_f
+        date = stock.trading_days.sort_by(&:date)[game.step].date
+        game.update(date: date)
         bot.api.send_message(chat_id: message.from.id,
-          text: price,
+          text: "Stock: #{stock.description} \n" +
+          "Date: #{game.date} \n" +
+          "Price: #{price} \n" +
+          "Your capital: #{user.capital.to_f}$" ,
           reply_markup: ConstantModule::NEXT_DAY_MARKUP)
       rescue NoMethodError
         bot.api.send_message(chat_id: message.from.id,
           text: "The period is over, the game is over",
           reply_markup: stock_markups)
+      else
       end
+    when "Buy"
+      bot.api.send_message(chat_id: message.from.id,
+        text: "Please enter the amount of capital you want to spend on the purchase of shares.")
+    when "Sell"
+      bot.api.send_message(chat_id: message.from.id,
+        text: "Please enter the number of shares you want to sell.")
+    else
+    end
+
+
+    if stocks_titles.include?(message.data)
+      p stock = Stock.find_by(title: message.data)
+      first_trading_day = stock.trading_days.sort_by(&:date).first
+      first_trading_day_price = first_trading_day.adj_close.to_f
+      first_trading_day_date = first_trading_day.date
+      game = Game.create!(date: first_trading_day_date, 
+        step: 0,
+        telegram_profile_id: user.id,
+        ticker: [] << stock.ticker)
+      bot.api.send_message(chat_id: message.from.id,
+        text: "Stock: #{stock.description} \n" +
+          "Date: #{game.date} \n" +
+          "Price: #{first_trading_day_price} \n" +
+          "Your capital: #{user.capital.to_f}$",
+        reply_markup: ConstantModule::NEXT_DAY_MARKUP)
     else
     end
 

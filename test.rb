@@ -3,6 +3,7 @@ require 'uri'
 require 'net/http'
 require 'json'
 
-message_data = "apple_stock"
+1.upto(9) do |i|
+  p i
+end
 
-p message_data = message_data.gsub("_", " ").capitalize
