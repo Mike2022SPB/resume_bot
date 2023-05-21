@@ -86,9 +86,11 @@ class CallbackHandler
       else
       end
     when "Buy"
+      user.update(step: "buy")
       bot.api.send_message(chat_id: message.from.id,
         text: "Please enter the amount of capital you want to spend on the purchase of shares.")
     when "Sell"
+      user.update(step: "sell")
       bot.api.send_message(chat_id: message.from.id,
         text: "Please enter the number of shares you want to sell.")
     else

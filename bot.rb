@@ -21,6 +21,19 @@ Telegram::Bot::Client.run(token) do |bot|
     when "message"
       bot.api.send_message(chat_id: ENV.fetch('TELEGRAM_ID'),
         text: "@#{message.from.username}: #{message.text}")
+    when "buy"
+      investments = message.text.to_i
+      bot.api.send_message(chat_id: message.from.id,
+        text: "The amount of invested capital is: #{investments}",
+          reply_markup: ConstantModule::NEXT_DAY_MARKUP)
+      user.update(step: "game")
+    when "sell"
+      shares = message.text.to_i
+      bot.api.send_message(chat_id: message.from.id,
+        text: "The number of shares to be purchased is: #{shares}",
+        reply_markup: ConstantModule::NEXT_DAY_MARKUP)
+      user.update(step: "game")
+    else
     end
 
     case message
@@ -33,10 +46,6 @@ Telegram::Bot::Client.run(token) do |bot|
               text: "Hello, #{message.from.first_name}! Please, choose the option below:",
               reply_markup: ConstantModule::COMMON_MARKUP)
       else
-        user.update(step: "menu")
-        bot.api.send_message(chat_id: message.chat.id,
-              text: "Please, choose the option",
-              reply_markup: ConstantModule::COMMON_MARKUP)
       end
       p "text: #{message.text}"
     when Telegram::Bot::Types::CallbackQuery
