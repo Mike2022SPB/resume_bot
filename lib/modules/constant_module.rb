@@ -43,4 +43,11 @@ module ConstantModule
   ]
 
   NEXT_DAY_MARKUP = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: NEXT_DAY_INLINE_KEYBOARD)
+
+  OPERATION_BUY_INLINE_KEYBOARD = [
+    Telegram::Bot::Types::InlineKeyboardButton.new(text: "Cancel buying, next day", callback_data: "Next"),
+    Telegram::Bot::Types::InlineKeyboardButton.new(text: "Buy", callback_data: "Buy_Stock")
+  ]
+
+  NEXT_DAY_BUY_MARKUP = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: OPERATION_BUY_INLINE_KEYBOARD)
 end

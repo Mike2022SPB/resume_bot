@@ -23,9 +23,12 @@ Telegram::Bot::Client.run(token) do |bot|
         text: "@#{message.from.username}: #{message.text}")
     when "buy"
       investments = message.text.to_i
+      float_price = user.games.last.stock_price.to_f
+      shares_for_buying = (investments / float_price).to_i
       bot.api.send_message(chat_id: message.from.id,
-        text: "The amount of invested capital is: #{investments}",
-          reply_markup: ConstantModule::NEXT_DAY_MARKUP)
+        text: "The amount of invested capital is: #{investments}$ \n" +
+        "You can buy #{shares_for_buying} shares for #{investments}$ at the price of #{float_price}$ per share.",
+          reply_markup: ConstantModule::NEXT_DAY_BUY_MARKUP)
       user.update(step: "game")
     when "sell"
       shares = message.text.to_i

@@ -72,11 +72,11 @@ class CallbackHandler
       begin
         price = stock.trading_days.sort_by(&:date)[game.step].adj_close.to_f
         date = stock.trading_days.sort_by(&:date)[game.step].date
-        game.update(date: date)
+        game.update(date: date, stock_price: price)
         bot.api.send_message(chat_id: message.from.id,
           text: "Stock: #{stock.description} \n" +
           "Date: #{game.date} \n" +
-          "Price: #{price} \n" +
+          "Price: #{game.stock_price} \n" +
           "Your capital: #{user.capital.to_f}$" ,
           reply_markup: ConstantModule::NEXT_DAY_MARKUP)
       rescue NoMethodError
