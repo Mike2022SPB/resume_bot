@@ -20,6 +20,7 @@ Telegram::Bot::Client.run(token) do |bot|
     when "message"
       bot.api.send_message(chat_id: ENV.fetch('TELEGRAM_ID'),
         text: "@#{message.from.username}: #{message.text}")
+      user.update(step: "game")
     when "buy"
       investments = InvestmentPortfolio.create!(potential_investments: message.text.to_d)
       investments.update(potential_float_price: user.games.last.stock_price.to_d)
