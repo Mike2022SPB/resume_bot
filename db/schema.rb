@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_21_143009) do
+ActiveRecord::Schema.define(version: 2023_05_30_131223) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,6 +80,19 @@ ActiveRecord::Schema.define(version: 2023_05_21_143009) do
     t.datetime "updated_at", precision: 6, null: false
     t.decimal "stock_price", default: "0.0", null: false
     t.index ["telegram_profile_id"], name: "index_games_on_telegram_profile_id"
+  end
+
+  create_table "investment_portfolios", force: :cascade do |t|
+    t.decimal "potential_investments"
+    t.decimal "potential_float_price"
+    t.integer "shares_for_buying"
+    t.decimal "investments"
+    t.decimal "float_price"
+    t.integer "purchased_shares"
+    t.bigint "telegram_profile_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["telegram_profile_id"], name: "index_investment_portfolios_on_telegram_profile_id"
   end
 
   create_table "oauth_access_grants", force: :cascade do |t|

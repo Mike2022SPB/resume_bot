@@ -1,5 +1,4 @@
 require File.expand_path('config/environment', __dir__)
-
 require "telegram/bot"
 require_relative "lib/modules/constant_module.rb"
 
@@ -22,14 +21,16 @@ Telegram::Bot::Client.run(token) do |bot|
       bot.api.send_message(chat_id: ENV.fetch('TELEGRAM_ID'),
         text: "@#{message.from.username}: #{message.text}")
     when "buy"
-      investments = message.text.to_i
-      float_price = user.games.last.stock_price.to_f
-      shares_for_buying = (investments / float_price).to_i
+      investments = InvestmentPortfolio.create!(potential_investments: message.text.to_d)
+      investments.update(potential_float_price: user.games.last.stock_price.to_d)
+      shares_for_buying = (investments.potential_investments / investments.potential_float_price).to_i
+      investments.update(shares_for_buying: shares_for_buying)
       bot.api.send_message(chat_id: message.from.id,
-        text: "The amount of invested capital is: #{investments}$ \n" +
-        "You can buy #{shares_for_buying} shares for #{investments}$ at the price of #{float_price}$ per share.",
+        text: "The amount of invested capital is: #{investments.potential_investments}$ \n" +
+        "You can buy #{investments.shares_for_buying} shares for #{investments.potential_investments}$ at the price of #{investments.potential_float_price}$ per share.",
           reply_markup: ConstantModule::NEXT_DAY_BUY_MARKUP)
-      user.update(step: "game")
+    when "buying"
+
     when "sell"
       shares = message.text.to_i
       bot.api.send_message(chat_id: message.from.id,
@@ -46,8 +47,8 @@ Telegram::Bot::Client.run(token) do |bot|
       when "/start"
         user.update(step: "menu")
         bot.api.send_message(chat_id: message.chat.id,
-              text: "Hello, #{message.from.first_name}! Please, choose the option below:",
-              reply_markup: ConstantModule::COMMON_MARKUP)
+          text: "Hello, #{message.from.first_name}! Please, choose the option below:",
+          reply_markup: ConstantModule::COMMON_MARKUP)
       else
       end
       p "text: #{message.text}"
