@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_30_131223) do
+ActiveRecord::Schema.define(version: 2023_07_04_115043) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,12 @@ ActiveRecord::Schema.define(version: 2023_05_30_131223) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+  end
+
+  create_table "chats", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "games", force: :cascade do |t|
@@ -155,6 +161,14 @@ ActiveRecord::Schema.define(version: 2023_05_30_131223) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "profiles", force: :cascade do |t|
+    t.string "name"
+    t.integer "age"
+    t.boolean "active"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "stocks", force: :cascade do |t|
     t.string "title"
     t.string "ticker"
@@ -193,6 +207,15 @@ ActiveRecord::Schema.define(version: 2023_05_30_131223) do
     t.index ["stock_id"], name: "index_trading_days_on_stock_id"
   end
 
+  create_table "user_chats", force: :cascade do |t|
+    t.bigint "chat_id"
+    t.bigint "profile_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["chat_id"], name: "index_user_chats_on_chat_id"
+    t.index ["profile_id"], name: "index_user_chats_on_profile_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -226,4 +249,6 @@ ActiveRecord::Schema.define(version: 2023_05_30_131223) do
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "users", column: "resource_owner_id"
   add_foreign_key "oauth_identities", "users"
+  add_foreign_key "user_chats", "chats"
+  add_foreign_key "user_chats", "profiles"
 end
