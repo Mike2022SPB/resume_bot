@@ -29,9 +29,9 @@ class CallbackHandler
     when "IDT"
       bot.api.send_message(chat_id: message.from.id,
         text: Paragraph.find_by(title: "IDT").description)
-    when "APCGS"
+    when "Etnamed"
       bot.api.send_message(chat_id: message.from.id,
-        text: Paragraph.find_by(title: "APCGS").description)
+        text: Paragraph.find_by(title: "Etnamed").description)
     when "Feniks"
       bot.api.send_message(chat_id: message.from.id,
         text: Paragraph.find_by(title: "Feniks consulting").description)
